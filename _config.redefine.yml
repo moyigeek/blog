@@ -130,9 +130,9 @@ home_banner:
   subtitle:
     text: ["setback is unavoidable but giving up is unforgivable", "This is the second message", "etc"] # subtitle text, array
     hitokoto:  # 一言配置
-      enable: false # Whether to enable hitokoto
+      enable: true # Whether to enable hitokoto
       show_author: false # Whether to show author
-      api: https://v1.hitokoto.cn # API URL, can add types, see https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
+      api: https://v1.hitokoto.cn?c=a&c=b&c=c&c=j # API URL, can add types, see https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
     typing_speed: 100 # Typing speed (ms)
     backing_speed: 80 # Backing speed (ms)
     starting_delay: 500 # Start delay (ms)
@@ -199,26 +199,33 @@ navbar:
     Home: 
       path: / 
       icon: fa-regular fa-house # can be empty
-    # Archives: 
-    #   path: /archives 
-    #   icon: fa-regular fa-archive # can be empty
-    # Status: 
-    #   path: https://status.ohevan.com/
-    #   icon: fa-regular fa-chart-bar
-    # About: 
-    #   icon: fa-regular fa-user
-    #   submenus:
-    #     Me: /about
+    Archives: 
+      path: /archives 
+      icon: fa-regular fa-archive # can be empty
+    #tags:
+    #    Tags: #取名随意
+     #       icon: fa-solid fa-tag #图标
+     #       path: /tags/
+    #Status: 
+    #  path: https://status.ohevan.com/
+    #  icon: fa-regular fa-chart-bar
+    #About: 
+    #  icon: fa-regular fa-user
+    #  submenus:
+    #    Me: /about
     #     Github: https://github.com/EvanNotFound/hexo-theme-redefine
     #     Blog: https://ohevan.com
     #     Friends: /friends
-    # Links: 
-    #   icon: fa-regular fa-link
+    Links: 
+      icon: fa-regular fa-link
     #   submenus:
     #     Link1: /link1
     #     Link2: /link2
     #     Link3: /link3
     # ...... # you can add more
+    相册: #取名随意
+      icon: fa-solid fa-image #图标
+      path: /masonry/
   # Navbar search (local search). Requires hexo-generator-searchdb (npm i hexo-generator-searchdb). See https://github.com/theme-next/hexo-generator-searchdb
   search:
     # Whether to enable

@@ -8,7 +8,7 @@ subtitle: 'a deep dive into the world of technology'
 description: ''
 keywords: RUST C++ rCore
 author: moyigeek
-language: ch
+language: zh
 timezone: 'Asia/Shanghai'
 
 # URL
@@ -40,7 +40,10 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
