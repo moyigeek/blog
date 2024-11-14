@@ -1,2 +1,2 @@
 # blog
-moyihust.eu.org
+blog.moyihust.eu.org
