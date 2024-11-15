@@ -245,7 +245,7 @@ home:
     first_item: menu # First item in sidebar. menu, info
     announcement: # Announcement text
     show_on_mobile: true # Whether to show sidebar navigation on mobile sheet menu
-    links:
+    #links:
       # Archives: 
       #   path: /archives 
       #   icon: fa-regular fa-archive # can be empty
