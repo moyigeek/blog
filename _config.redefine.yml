@@ -122,8 +122,8 @@ home_banner:
   style: fixed # static or fixed
   # Home banner image
   image: 
-    light: /images/wallhaven-wqery6-light.webp # light mode
-    dark: /images/wallhaven-wqery6-dark.webp # dark mode
+    light: /background/back-light.jpg # light mode
+    dark: /background/back-dark.jpg # dark mode
   # Home banner title
   title: Moyigeek's Blog
   # Home banner subtitle
