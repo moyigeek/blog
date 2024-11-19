@@ -7,7 +7,7 @@ tags:
 ---
 
 ## moyigeek 的2024秋冬rcore训练营阶段二笔记
-<!-- more -->
+
 
 ## lab1
 在TCB中加入start_time和syscall_times字段，并在trap中更新syscall_times，在taskManager的run_first_task和run_next_task中维护start_time字段，最后在syscall中通过get_current_task_control_block实现返回task_info
