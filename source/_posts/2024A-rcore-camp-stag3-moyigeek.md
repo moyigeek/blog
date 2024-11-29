@@ -99,6 +99,25 @@ allocator
 - BitmapByteAllocator
 
 
+[print_with_color]: 支持带颜色的打印输出。
+
+要求：
+1. 修改一个组件的实现
+2. 执行make run A=exercises/print_with_color
+预期：字符串输出带颜色。（具体颜色不做要求）
+修改axstd/src/macros.rs文件中的println!宏，使其输出带颜色的字符串。
+```rust
+/// Prints to the standard output, with a newline.
+#[macro_export]
+macro_rules! println {
+    () => { $crate::print!("\n") };
+    ($($arg:tt)*) => {
+        $crate::io::__print_impl(format_args!("\x1B[45m{}\x1B[0m\n", format_args!($($arg)*)));
+    }
+}
+```
+
+
 [support hashmap]:支持HashMap类型
 要求:
 1.在axstd等组件中，支持collections::HashMap
