@@ -76,9 +76,13 @@ The name of the function has changed from [`create_react_agent`](https://referen
 函数名称已从 [`create_react_agent`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.chat_agent_executor.create_react_agent) 更改为 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent)：
 
 ```python  
-from langgraph.prebuilt import create_react_agent # [!code --]
-from langchain.agents import create_agent # [!code ++]
-```  
+# old
+from langgraph.prebuilt import create_react_agent 
+
+# new
+from langchain.agents import create_agent 
+```
+
   
 For more information, see [Agents](/oss/python/langchain/agents).  
 欲了解更多信息，请参阅 [Agents](/oss/python/langchain/agents)。
