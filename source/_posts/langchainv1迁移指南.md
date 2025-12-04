@@ -101,7 +101,7 @@ from langchain.agents import create_agent
 agent = create_agent(
     model="claude-sonnet-4-5-20250929",
     tools=[check_weather],
-    system_prompt="You are a helpful assistant"  # [!code highlight]
+    system_prompt="You are a helpful assistant"  
 )
 ```  
 old
@@ -111,7 +111,7 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(
     model="claude-sonnet-4-5-20250929",
     tools=[check_weather],
-    prompt="You are a helpful assistant"  # [!code highlight]
+    prompt="You are a helpful assistant"  
 )
 ```
 
@@ -127,7 +127,7 @@ from langchain.agents import create_agent
 agent = create_agent(
     model="claude-sonnet-4-5-20250929",
     tools=[check_weather],
-    system_prompt="You are a helpful assistant"  # [!code highlight]
+    system_prompt="You are a helpful assistant"  
 )
 ```  
 old  
@@ -138,7 +138,7 @@ from langgraph.prebuilt import create_react_agent
 agent = create_react_agent(
     model="claude-sonnet-4-5-20250929",
     tools=[check_weather],
-    prompt=SystemMessage(content="You are a helpful assistant")  # [!code highlight]
+    prompt=SystemMessage(content="You are a helpful assistant")  
 )
 ```
 
@@ -156,11 +156,11 @@ from langchain.agents.middleware import dynamic_prompt, ModelRequest
 from langgraph.runtime import Runtime  
   
 @dataclass
-class Context:  # [!code highlight]
+class Context:  
     user_role: str = "user"  
   
-@dynamic_prompt  # [!code highlight]
-def dynamic_prompt(request: ModelRequest) -> str:  # [!code highlight]
+@dynamic_prompt  
+def dynamic_prompt(request: ModelRequest) -> str:  
     user_role = request.runtime.context.user_role
     base_prompt = "You are a helpful assistant."  
   
@@ -175,12 +175,12 @@ def dynamic_prompt(request: ModelRequest) -> str:  # [!code highlight]
     else:
         prompt = base_prompt  
   
-    return prompt  # [!code highlight]  
+    return prompt    
   
 agent = create_agent(
     model="gpt-4o",
     tools=tools,
-    middleware=[dynamic_prompt],  # [!code highlight]
+    middleware=[dynamic_prompt],  
     context_schema=Context
 )  
   
@@ -203,7 +203,7 @@ class Context:
     user_role: str  
   
 def dynamic_prompt(state: AgentState) -> str:
-    runtime = get_runtime(Context)  # [!code highlight]
+    runtime = get_runtime(Context)  
     user_role = runtime.context.user_role
     base_prompt = "You are a helpful assistant."  
   
@@ -254,11 +254,11 @@ agent = create_agent(
     model="claude-sonnet-4-5-20250929",
     tools=tools,
     middleware=[
-        SummarizationMiddleware(  # [!code highlight]
-            model="claude-sonnet-4-5-20250929",  # [!code highlight]
-            trigger={"tokens": 1000}  # [!code highlight]
-        )  # [!code highlight]
-    ]  # [!code highlight]
+        SummarizationMiddleware(  
+            model="claude-sonnet-4-5-20250929",  
+            trigger={"tokens": 1000}  
+        )  
+    ]  
 )
 ```  
 
@@ -354,24 +354,24 @@ Use the [`state_schema`](https://reference.langchain.com/python/langchain/middle
 new
 ```python 
 from langchain.tools import tool, ToolRuntime
-from langchain.agents import create_agent, AgentState  # [!code highlight]  
+from langchain.agents import create_agent, AgentState    
   
 # Define custom state extending AgentState  定义扩展 AgentState 的自定义状态
 class CustomState(AgentState):
     user_name: str  
   
-@tool  # [!code highlight]
+@tool  
 def greet(
     runtime: ToolRuntime[None, CustomState]
 ) -> str:
     """Use this to greet the user by name."""  """使用此工具按姓名问候用户"""
-    user_name = runtime.state.get("user_name", "Unknown")  # [!code highlight]
+    user_name = runtime.state.get("user_name", "Unknown")  
     return f"Hello {user_name}!"  
   
-agent = create_agent(  # [!code highlight]
+agent = create_agent(  
     model="claude-sonnet-4-5-20250929",
     tools=[greet],
-    state_schema=CustomState  # [!code highlight]
+    state_schema=CustomState  
 )
 ```  
 
@@ -415,7 +415,7 @@ class CustomState(AgentState):
     model_call_count: NotRequired[int]  
   
 class CallCounterMiddleware(AgentMiddleware[CustomState]):
-    state_schema = CustomState  # [!code highlight]  
+    state_schema = CustomState    
   
     def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:
         count = state.get("model_call_count", 0)
@@ -429,7 +429,7 @@ class CallCounterMiddleware(AgentMiddleware[CustomState]):
 agent = create_agent(
     model="claude-sonnet-4-5-20250929",
     tools=[...],
-    middleware=[CallCounterMiddleware()]  # [!code highlight]
+    middleware=[CallCounterMiddleware()]  
 )
 ```  
   
@@ -446,13 +446,13 @@ new
 from langchain.agents import AgentState, create_agent  
   
 # AgentState is a TypedDict  AgentState 是一个 TypedDict
-class CustomAgentState(AgentState):  # [!code highlight]
+class CustomAgentState(AgentState):  
     user_id: str  
   
 agent = create_agent(
     model="claude-sonnet-4-5-20250929",
     tools=tools,
-    state_schema=CustomAgentState  # [!code highlight]
+    state_schema=CustomAgentState  
 )
 ```  
 
@@ -465,7 +465,7 @@ from langgraph.graph import StateGraph
 from langgraph.graph.messages import add_messages
 from langchain.messages import AnyMessage  
   
-class AgentState(BaseModel):  # [!code highlight]
+class AgentState(BaseModel):  
     messages: Annotated[list[AnyMessage], add_messages]
     user_id: str  
   
@@ -589,7 +589,7 @@ from langgraph.prebuilt import create_react_agent, ToolNode
   
 agent = create_react_agent(
     model="claude-sonnet-4-5-20250929",
-    tools=ToolNode([check_weather, search_web]) # [!code highlight]
+    tools=ToolNode([check_weather, search_web]) 
 )
 ```
 
@@ -647,7 +647,7 @@ agent = create_agent(
     model="gpt-4o-mini",
     tools=tools,
     # explicitly using tool strategy  显式使用工具策略
-    response_format=ToolStrategy(OutputSchema)  # [!code highlight]
+    response_format=ToolStrategy(OutputSchema)  
 )
 ```  
   
@@ -663,7 +663,7 @@ agent = create_react_agent(
     model="gpt-4o-mini",
     tools=tools,
     # using tool strategy by default with no option for provider strategy  默认使用工具策略，没有提供者策略选项
-    response_format=OutputSchema  # [!code highlight]
+    response_format=OutputSchema  
 )  
   
 # OR  或者
@@ -672,7 +672,7 @@ agent = create_react_agent(
     model="gpt-4o-mini",
     tools=tools,
     # using a custom prompt to instruct the model to generate the output schema  使用自定义提示来指示模型生成输出模式
-    response_format=("please generate ...", OutputSchema)  # [!code highlight]
+    response_format=("please generate ...", OutputSchema)  
 )
 ```
 
@@ -711,12 +711,12 @@ class Context:
 agent = create_agent(
     model=model,
     tools=tools,
-    context_schema=Context  # [!code highlight]
+    context_schema=Context  
 )  
   
 result = agent.invoke(
     {"messages": [{"role": "user", "content": "Hello"}]},
-    context=Context(user_id="123", session_id="abc")  # [!code highlight]
+    context=Context(user_id="123", session_id="abc")  
 )
 ```  
   
@@ -728,12 +728,12 @@ agent = create_react_agent(model, tools)
 # Pass context via configurable  通过 configurable 传递上下文
 result = agent.invoke(
     {"messages": [{"role": "user", "content": "Hello"}]},
-    config={  # [!code highlight]
-        "configurable": {  # [!code highlight]
-            "user_id": "123",  # [!code highlight]
-            "session_id": "abc"  # [!code highlight]
-        }  # [!code highlight]
-    }  # [!code highlight]
+    config={  
+        "configurable": {  
+            "user_id": "123",  
+            "session_id": "abc"  
+        }  
+    }  
 )
 ```
 
