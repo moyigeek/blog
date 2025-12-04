@@ -7,12 +7,6 @@ tags:
 - langchain
 - ai agent
 ---
-
-
-
-# LangChain v1 migration guide  
-# LangChain v1 迁移指南  
-  
 This guide outlines the major changes between [LangChain v1](/oss/python/releases/langchain-v1) and previous versions.  
 本指南概述了 [LangChain v1]（/oss/python/releases/langchain-v1）与之前版本之间的主要变化。  
   
@@ -89,7 +83,7 @@ For more information, see [Agents](/oss/python/langchain/agents).
 
 ### Prompts 提示
 
-#### Static prompt rename  #### 静态提示重命名
+#### Static prompt rename   重命名静态提示
 
 The `prompt` parameter has been renamed to [`system_prompt`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent\(system_prompt\)):  
 `prompt` 参数已重命名为 [`system_prompt`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent\(system_prompt\))：
@@ -103,8 +97,12 @@ agent = create_agent(
     tools=[check_weather],
     system_prompt="You are a helpful assistant"  
 )
-```  
+```
+
+
 old
+
+
 ```python 
 from langgraph.prebuilt import create_react_agent  
   
@@ -129,8 +127,10 @@ agent = create_agent(
     tools=[check_weather],
     system_prompt="You are a helpful assistant"  
 )
-```  
-old  
+``` 
+
+old
+
 ```python 
 from langchain.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent  
@@ -192,6 +192,8 @@ agent.invoke(
 ```  
   
 old
+
+
 ```python 
 from dataclasses import dataclass  
   
@@ -246,6 +248,7 @@ v1 now has summarization middleware as a built in option:
 v1 现在有内置的摘要中间件选项：
 
 new
+
 ```python 
 from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware  
@@ -263,6 +266,7 @@ agent = create_agent(
 ```  
 
 old
+
 ```python 
 from langgraph.prebuilt import create_react_agent, AgentState  
   
@@ -316,6 +320,8 @@ agent = create_agent(
 ```
 
 old
+
+
 ```python 
 from langgraph.prebuilt import create_react_agent
 from langgraph.prebuilt import AgentState  
@@ -352,6 +358,7 @@ Use the [`state_schema`](https://reference.langchain.com/python/langchain/middle
 当您的自定义状态需要被工具访问时，请使用 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) 参数：
 
 new
+
 ```python 
 from langchain.tools import tool, ToolRuntime
 from langchain.agents import create_agent, AgentState    
@@ -376,6 +383,8 @@ agent = create_agent(
 ```  
 
 old
+
+
 ```python 
 from typing import Annotated
 from langgraph.prebuilt import InjectedState, create_react_agent
@@ -442,6 +451,8 @@ See the [middleware documentation](/oss/python/langchain/middleware#custom-state
 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 仅支持 `TypedDict` 作为状态模式。Pydantic 模型和数据类不再受支持。
 
 new
+
+
 ```python 
 from langchain.agents import AgentState, create_agent  
   
@@ -457,6 +468,8 @@ agent = create_agent(
 ```  
 
 old
+
+
 ```python 
 from typing_extensions import Annotated  
   
@@ -492,6 +505,7 @@ This functionality has been ported to the middleware interface in v1.
 #### Dynamic model selection  动态模型选择
 
 new
+
 ```python 
 from langchain.agents import create_agent
 from langchain.agents.middleware import (
@@ -524,6 +538,7 @@ agent = create_agent(
 ```  
 
 old
+
 ```python 
 from langgraph.prebuilt import create_react_agent, AgentState
 from langchain_openai import ChatOpenAI  
@@ -557,9 +572,8 @@ agent = create_agent(model_with_tools, tools=[])
 agent = create_agent("gpt-4o-mini", tools=[some_tool])
 ```  
   
-<Note>  <注意>
-  Dynamic model functions can return pre-bound models if structured output is *not* used.  如果不使用结构化输出，动态模型函数可以返回预绑定模型。
-</Note>  </注意>
+Dynamic model functions can return pre-bound models if structured output is *not* used.  如果不使用结构化输出，动态模型函数可以返回预绑定模型。
+
 
 ### Tools 工具
 
@@ -574,6 +588,8 @@ The argument will no longer accept [`ToolNode`](https://reference.langchain.com/
 该参数将不再接受 [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) 实例。
 
 new
+
+
 ```python 
 from langchain.agents import create_agent  
   
@@ -584,6 +600,8 @@ agent = create_agent(
 ```  
 
 old
+
+
 ```python 
 from langgraph.prebuilt import create_react_agent, ToolNode  
   
@@ -651,6 +669,8 @@ agent = create_agent(
 )
 ```  
   
+
+
 ```python 
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel  
