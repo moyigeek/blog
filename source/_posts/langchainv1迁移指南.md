@@ -75,7 +75,7 @@ The name of the function has changed from [`create_react_agent`](https://referen
 代理预构建的导入路径已从 `langgraph.prebuilt` 更改为 `langchain.agents`。
 函数名称已从 [`create_react_agent`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.chat_agent_executor.create_react_agent) 更改为 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent)：
 
-```python  theme={null}
+```python  
 from langgraph.prebuilt import create_react_agent # [!code --]
 from langchain.agents import create_agent # [!code ++]
 ```  
@@ -402,7 +402,7 @@ This helps to keep state extensions conceptually scoped to the relevant middlewa
 这有助于将状态扩展在概念上限制在相关的中间件和工具范围内。
 
 
-```python  theme={null}
+```python  
 from langchain.agents.middleware import AgentState, AgentMiddleware
 from typing_extensions import NotRequired
 from typing import Any  
