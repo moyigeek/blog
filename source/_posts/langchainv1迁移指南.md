@@ -90,7 +90,8 @@ For more information, see [Agents](/oss/python/langchain/agents).
 The `prompt` parameter has been renamed to [`system_prompt`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent\(system_prompt\)):  
 `prompt` 参数已重命名为 [`system_prompt`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent\(system_prompt\))：
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent  
   
 agent = create_agent(
@@ -99,8 +100,8 @@ agent = create_agent(
     system_prompt="You are a helpful assistant"  # [!code highlight]
 )
 ```  
-  
-```python v0 (old) theme={null}
+old
+```python 
 from langgraph.prebuilt import create_react_agent  
   
 agent = create_react_agent(
@@ -115,7 +116,8 @@ agent = create_react_agent(
 If using [`SystemMessage`](https://reference.langchain.com/python/langchain/messages/#langchain.messages.SystemMessage) objects in the system prompt, extract the string content:  
 如果在系统提示中使用 [`SystemMessage`](https://reference.langchain.com/python/langchain/messages/#langchain.messages.SystemMessage) 对象，请提取字符串内容：
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent  
   
 agent = create_agent(
@@ -124,8 +126,8 @@ agent = create_agent(
     system_prompt="You are a helpful assistant"  # [!code highlight]
 )
 ```  
-  
-```python v0 (old) theme={null}
+old  
+```python 
 from langchain.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent  
   
@@ -141,7 +143,8 @@ agent = create_react_agent(
 Dynamic prompts are a core context engineering pattern— they adapt what you tell the model based on the current conversation state. To do this, use the [`@dynamic_prompt`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.dynamic_prompt) decorator:  
 动态提示是一种核心的上下文工程模式——它们会根据当前对话状态调整你告诉模型的内容。为此，请使用 [`@dynamic_prompt`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.dynamic_prompt) 装饰器：
 
-```python v1 (new) theme={null}
+new
+```python 
 from dataclasses import dataclass  
   
 from langchain.agents import create_agent
@@ -184,7 +187,8 @@ agent.invoke(
 )
 ```  
   
-```python v0 (old) theme={null}
+old
+```python 
 from dataclasses import dataclass  
   
 from langgraph.prebuilt import create_react_agent, AgentState
@@ -237,7 +241,8 @@ Common use cases include:  常见用例包括：
 v1 now has summarization middleware as a built in option:  
 v1 现在有内置的摘要中间件选项：
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware  
   
@@ -252,8 +257,9 @@ agent = create_agent(
     ]  # [!code highlight]
 )
 ```  
-  
-```python v0 (old) theme={null}
+
+old
+```python 
 from langgraph.prebuilt import create_react_agent, AgentState  
   
 def custom_summarization_function(state: AgentState):
@@ -284,7 +290,8 @@ Common use cases include:  常见用例包括：
 v1 has a built in middleware for human in the loop approval for tool calls:  
 v1 内置了一个用于工具调用的人工审批中间件：
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware  
   
@@ -302,9 +309,10 @@ agent = create_agent(
         )
     ]
 )
-```  
-  
-```python v0 (old) theme={null}
+```
+
+old
+```python 
 from langgraph.prebuilt import create_react_agent
 from langgraph.prebuilt import AgentState  
   
@@ -327,19 +335,20 @@ Custom state extends the default agent state with additional fields. You can def
 1. **Via [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) on [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent)** - Best for state used in tools  通过 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 上的 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) - 最适合在工具中使用的状态
 2. **Via middleware** - Best for state managed by specific middleware hooks and tools attached to said middleware  通过中间件 - 最适合由特定中间件钩子和附加到该中间件的工具管理的状态
 
-<Note>  <注意>
-  Defining custom state via middleware is preferred over defining it via [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) on [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) because it allows you to keep state extensions conceptually scoped to the relevant middleware and tools.  
-  通过中间件定义自定义状态比通过 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 上的 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) 定义更受推荐，因为它允许您将状态扩展在概念上限制在相关的中间件和工具范围内。
-  
-  `state_schema` is still supported for backwards compatibility on `create_agent`.  `state_schema` 在 `create_agent` 上仍受支持以保持向后兼容性。
-</Note>  </注意>
+
+Defining custom state via middleware is preferred over defining it via [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) on [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) because it allows you to keep state extensions conceptually scoped to the relevant middleware and tools.  
+通过中间件定义自定义状态比通过 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 上的 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) 定义更受推荐，因为它允许您将状态扩展在概念上限制在相关的中间件和工具范围内。
+
+`state_schema` is still supported for backwards compatibility on `create_agent`.  `state_schema` 在 `create_agent` 上仍受支持以保持向后兼容性。
+
 
 #### 通过 `state_schema` 定义状态
 
 Use the [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) parameter when your custom state needs to be accessed by tools:  
 当您的自定义状态需要被工具访问时，请使用 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) 参数：
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.tools import tool, ToolRuntime
 from langchain.agents import create_agent, AgentState  # [!code highlight]  
   
@@ -361,8 +370,9 @@ agent = create_agent(  # [!code highlight]
     state_schema=CustomState  # [!code highlight]
 )
 ```  
-  
-```python v0 (old) theme={null}
+
+old
+```python 
 from typing import Annotated
 from langgraph.prebuilt import InjectedState, create_react_agent
 from langgraph.prebuilt.chat_agent_executor import AgentState  
@@ -390,6 +400,7 @@ Middleware can also define custom state by setting the [`state_schema`](https://
 This helps to keep state extensions conceptually scoped to the relevant middleware and tools.  
 中间件也可以通过设置 [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) 属性来定义自定义状态。
 这有助于将状态扩展在概念上限制在相关的中间件和工具范围内。
+
 
 ```python  theme={null}
 from langchain.agents.middleware import AgentState, AgentMiddleware
@@ -426,7 +437,8 @@ See the [middleware documentation](/oss/python/langchain/middleware#custom-state
 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) only supports `TypedDict` for state schemas. Pydantic models and dataclasses are no longer supported.  
 [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 仅支持 `TypedDict` 作为状态模式。Pydantic 模型和数据类不再受支持。
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import AgentState, create_agent  
   
 # AgentState is a TypedDict  AgentState 是一个 TypedDict
@@ -439,8 +451,9 @@ agent = create_agent(
     state_schema=CustomAgentState  # [!code highlight]
 )
 ```  
-  
-```python v0 (old) theme={null}
+
+old
+```python 
 from typing_extensions import Annotated  
   
 from pydantic import BaseModel
@@ -474,7 +487,8 @@ This functionality has been ported to the middleware interface in v1.
 
 #### Dynamic model selection  动态模型选择
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent
 from langchain.agents.middleware import (
     AgentMiddleware, ModelRequest
@@ -504,8 +518,9 @@ agent = create_agent(
     middleware=[DynamicModelMiddleware(messages_threshold=10)]
 )
 ```  
-  
-```python v0 (old) theme={null}
+
+old
+```python 
 from langgraph.prebuilt import create_react_agent, AgentState
 from langchain_openai import ChatOpenAI  
   
@@ -529,7 +544,7 @@ agent = create_react_agent(
 To better support structured output, [`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) no longer accepts pre-bound models with tools or configuration:  
 为了更好地支持结构化输出，[`create_agent`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent) 不再接受带有工具或配置的预绑定模型：
 
-```python  theme={null}
+```python  
 # No longer supported  不再支持
 model_with_tools = ChatOpenAI().bind_tools([some_tool])
 agent = create_agent(model_with_tools, tools=[])  
@@ -554,7 +569,8 @@ The [`tools`](https://reference.langchain.com/python/langchain/agents/#langchain
 The argument will no longer accept [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) instances.  
 该参数将不再接受 [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) 实例。
 
-```python v1 (new) theme={null}
+new
+```python 
 from langchain.agents import create_agent  
   
 agent = create_agent(
@@ -562,8 +578,9 @@ agent = create_agent(
     tools=[check_weather, search_web]
 )
 ```  
-  
-```python v0 (old) theme={null}
+
+old
+```python 
 from langgraph.prebuilt import create_react_agent, ToolNode  
   
 agent = create_react_agent(
@@ -577,7 +594,8 @@ agent = create_react_agent(
 You can now configure the handling of tool errors with middleware implementing the `wrap_tool_call` method.  
 您现在可以通过实现 `wrap_tool_call` 方法的中间件来配置工具错误的处理。
 
-```python v1 (new) theme={null}
+new
+```python 
 
 @wrap_tool_call
 def retry_on_error(request, handler):
@@ -590,7 +608,7 @@ def retry_on_error(request, handler):
                 raise
 ```  
   
-```python v0 (old) theme={null}
+```python 
 # Example coming soon  示例即将推出
 ```
 
@@ -611,7 +629,7 @@ In v1, there are two new structured output strategies:
 * `ToolStrategy` uses artificial tool calling to generate structured output  `ToolStrategy` 使用人工工具调用来生成结构化输出
 * `ProviderStrategy` uses provider-native structured output generation  `ProviderStrategy` 使用提供者原生的结构化输出生成
 
-```python v1 (new) theme={null}
+```python 
 from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy, ProviderStrategy
 from pydantic import BaseModel  
@@ -629,7 +647,7 @@ agent = create_agent(
 )
 ```  
   
-```python v0 (old) theme={null}
+```python 
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel  
   
@@ -676,7 +694,7 @@ When you invoke an agent, it's often the case that you want to pass two types of
 In v1, static context is supported by setting the `context` parameter to `invoke` and `stream`.  
 在 v1 中，通过将 `context` 参数设置为 `invoke` 和 `stream` 来支持静态上下文。
 
-```python v1 (new) theme={null}
+```python 
 from dataclasses import dataclass  
   
 from langchain.agents import create_agent  
@@ -698,7 +716,7 @@ result = agent.invoke(
 )
 ```  
   
-```python v0 (old) theme={null}
+```python 
 from langgraph.prebuilt import create_react_agent  
   
 agent = create_react_agent(model, tools)  
