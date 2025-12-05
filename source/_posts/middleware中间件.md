@@ -42,14 +42,15 @@ agent = create_agent(
 The core agent loop involves calling a model, letting it choose tools to execute, and then finishing when it calls no more tools:
 核心代理循环包括调用模型，让模型选择执行工具，然后在调用工具不复存在时完成：
 
-![Core agent loop diagram](https://mintcdn.com/langchain-5e9cc07a/Tazq8zGc0yYUYrDl/oss/images/core_agent_loop.png)
+
+{% asset_img core_agent_loop.avif core_agent_loop %}
 
 Middleware exposes hooks before and after each of those steps:
 中间件在每一步之前和之后都暴露了钩子：
 
 
 
-![Middleware flow diagram](https://mintcdn.com/langchain-5e9cc07a/RAP6mjwE5G00xYsA/oss/images/middleware_final.png)
+{% asset_img middleware_final.avif middleware_final %}
 
 ## todo 中间件
 为代理提供复杂多步骤任务的任务规划和跟踪能力。待办事项清单适用于以下用途：
