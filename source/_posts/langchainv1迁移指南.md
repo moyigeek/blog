@@ -89,6 +89,7 @@ The `prompt` parameter has been renamed to [`system_prompt`](https://reference.l
 `prompt` 参数已重命名为 [`system_prompt`](https://reference.langchain.com/python/langchain/agents/#langchain.agents.create_agent\(system_prompt\))：
 
 new
+
 ```python 
 from langchain.agents import create_agent  
   
