@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import { slugifyTag } from '@/utils/tags';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const tagMap = new Map<string, string>(); // slug -> original tag name
+
+  posts.forEach((post) => {
+    post.data.tags.forEach((tag) => {
+      const slug = slugifyTag(tag);
+      if (!tagMap.has(slug)) {
+        tagMap.set(slug, tag);
+      }
+    });
+  });
+
+  return Array.from(tagMap.entries()).map(([slug, tag]) => ({
+    params: { tag: slug },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => p.data.tags.some((t) => slugifyTag(t) === slug))
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`标签: ${tag}`} description={`标签 "${tag}" 下的文章`}>
+  <div class="container-prose py-8 sm:py-12">
+    <div class="mb-8 flex items-center gap-3">
+      <a href="/tags" class="text-sm transition-colors hover:text-accent dark:hover:text-accent-light" style="color: rgb(var(--color-muted));">
+        &larr; 所有标签
+      </a>
+    </div>
+
+    <h1 class="mb-8 text-3xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      <span class="text-accent dark:text-accent-light">#</span>{tag}
+      <span class="ml-2 text-lg font-normal" style="color: rgb(var(--color-muted));">
+        {posts.length} 篇
+      </span>
+    </h1>
+
+    <ul class="space-y-3">
+      {posts.map((post) => (
+        <li class="group flex items-baseline gap-3 border-b pb-3" style="border-color: rgb(var(--color-border));">
+          <span class="shrink-0 text-sm tabular-nums" style="color: rgb(var(--color-muted));">
+            <FormattedDate date={post.data.date} />
+          </span>
+          <a
+            href={`/posts/${post.slug}/`}
+            class="text-base font-medium transition-colors group-hover:text-accent dark:group-hover:text-accent-light"
+            style="color: rgb(var(--color-fg));"
+          >
+            {post.data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

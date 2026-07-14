@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+import { SITE } from '@/config';
+
+const allPosts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const pageSize = 10;
+const totalPages = Math.ceil(allPosts.length / pageSize);
+const posts = allPosts.slice(0, pageSize);
+---
+
+<BaseLayout>
+  <div class="container-wide py-8 sm:py-12">
+    <!-- Hero section -->
+    <section class="mb-12 text-center">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl" style="color: rgb(var(--color-fg));">
+        {SITE.title}
+      </h1>
+      <p class="mt-3 text-lg" style="color: rgb(var(--color-muted));">
+        {SITE.subtitle}
+      </p>
+    </section>
+
+    <!-- Post list -->
+    <div class="grid gap-4">
+      {posts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          date={post.data.date}
+          tags={post.data.tags}
+          url={`/posts/${post.slug}/`}
+          description={post.data.description}
+        />
+      ))}
+    </div>
+
+    <!-- Pagination -->
+    {totalPages > 1 && (
+      <nav class="mt-12 flex items-center justify-center gap-4">
+        <span class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium opacity-40"
+          style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          上一页
+        </span>
+
+        <span class="text-sm font-medium" style="color: rgb(var(--color-muted));">
+          1 / {totalPages}
+        </span>
+
+        <a href="/2" class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent dark:hover:text-accent-light"
+          style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+          下一页
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </nav>
+    )}
+  </div>
+</BaseLayout>

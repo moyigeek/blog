@@ -1,0 +1,24 @@
+---
+interface Props {
+  date: Date;
+  format?: 'auto' | 'date' | 'datetime';
+}
+
+const { date, format = 'date' } = Astro.props;
+
+function formatDate(d: Date, fmt: string) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+
+  if (fmt === 'datetime') return `${year}-${month}-${day} ${hours}:${minutes}`;
+  return `${year}-${month}-${day}`;
+}
+
+const formatted = formatDate(date, format);
+const iso = date.toISOString();
+---
+
+<time datetime={iso}>{formatted}</time>

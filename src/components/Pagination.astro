@@ -1,0 +1,56 @@
+---
+interface Props {
+  page: {
+    currentPage: number;
+    lastPage: number;
+    url: { prev?: string; next?: string };
+  };
+}
+
+const { page } = Astro.props;
+const { currentPage, lastPage, url } = page;
+---
+
+{lastPage > 1 && (
+  <nav class="flex items-center justify-center gap-4 mt-12">
+    {url.prev ? (
+      <a href={url.prev} class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent dark:hover:text-accent-light"
+        style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        上一页
+      </a>
+    ) : (
+      <span class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium opacity-40"
+        style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        上一页
+      </span>
+    )}
+
+    <span class="text-sm font-medium" style="color: rgb(var(--color-muted));">
+      {currentPage} / {lastPage}
+    </span>
+
+    {url.next ? (
+      <a href={url.next} class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent dark:hover:text-accent-light"
+        style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+        下一页
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    ) : (
+      <span class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium opacity-40"
+        style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+        下一页
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </span>
+    )}
+  </nav>
+)}

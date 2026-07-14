@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { slugifyTag } from '@/utils/tags';
+
+const posts = await getCollection('posts');
+
+// Build tag -> count map
+const tagCount = new Map<string, { name: string; count: number }>();
+posts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    const slug = slugifyTag(tag);
+    if (tagCount.has(slug)) {
+      tagCount.get(slug)!.count++;
+    } else {
+      tagCount.set(slug, { name: tag, count: 1 });
+    }
+  });
+});
+
+const tags = Array.from(tagCount.entries())
+  .map(([slug, { name, count }]) => ({ slug, name, count }))
+  .sort((a, b) => b.count - a.count);
+
+// Calculate font size based on count
+const maxCount = Math.max(...tags.map((t) => t.count), 1);
+const minCount = Math.min(...tags.map((t) => t.count), 1);
+
+function getFontSize(count: number): string {
+  if (maxCount === minCount) return '1rem';
+  const ratio = (count - minCount) / (maxCount - minCount);
+  const size = 0.875 + ratio * 0.75;
+  return `${size}rem`;
+}
+
+function getOpacity(count: number): number {
+  if (maxCount === minCount) return 1;
+  const ratio = (count - minCount) / (maxCount - minCount);
+  return 0.5 + ratio * 0.5;
+}
+---
+
+<BaseLayout title="标签" description="所有标签">
+  <div class="container-prose py-8 sm:py-12">
+    <h1 class="mb-8 text-3xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      标签
+      <span class="ml-2 text-lg font-normal" style="color: rgb(var(--color-muted));">
+        共 {tags.length} 个
+      </span>
+    </h1>
+
+    {tags.length === 0 ? (
+      <p style="color: rgb(var(--color-muted));">暂无标签</p>
+    ) : (
+      <div class="flex flex-wrap gap-3">
+        {tags.map((tag) => (
+          <a
+            href={`/tags/${tag.slug}`}
+            class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-medium transition-all hover:border-accent/40 hover:shadow-sm"
+            style={{
+              fontSize: getFontSize(tag.count),
+              borderColor: 'rgb(var(--color-border))',
+              color: 'rgb(var(--color-fg))',
+              opacity: getOpacity(tag.count),
+            }}
+          >
+            {tag.name}
+            <span class="text-xs" style="color: rgb(var(--color-muted));">{tag.count}</span>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>

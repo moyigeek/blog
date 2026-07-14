@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// Group by year
+const postsByYear = posts.reduce((acc, post) => {
+  const year = post.data.date.getFullYear();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {} as Record<number, typeof posts>);
+
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+---
+
+<BaseLayout title="归档" description="所有文章归档">
+  <div class="container-prose py-8 sm:py-12">
+    <h1 class="mb-8 text-3xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      归档
+      <span class="ml-2 text-lg font-normal" style="color: rgb(var(--color-muted));">
+        共 {posts.length} 篇
+      </span>
+    </h1>
+
+    <div class="space-y-10">
+      {years.map((year) => (
+        <section>
+          <h2 class="mb-4 flex items-center gap-3 text-xl font-semibold" style="color: rgb(var(--color-fg));">
+            <span class="text-accent dark:text-accent-light">{year}</span>
+            <span class="text-sm font-normal" style="color: rgb(var(--color-muted));">
+              {postsByYear[Number(year)].length} 篇
+            </span>
+            <div class="h-px flex-1" style="background: rgb(var(--color-border));"></div>
+          </h2>
+          <ul class="space-y-2">
+            {postsByYear[Number(year)].map((post) => (
+              <li class="flex items-baseline gap-3">
+                <span class="shrink-0 text-sm tabular-nums" style="color: rgb(var(--color-muted));">
+                  <FormattedDate date={post.data.date} />
+                </span>
+                <a
+                  href={`/posts/${post.slug}/`}
+                  class="text-sm font-medium transition-colors hover:text-accent dark:hover:text-accent-light"
+                  style="color: rgb(var(--color-fg));"
+                >
+                  {post.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

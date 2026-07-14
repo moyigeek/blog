@@ -1,0 +1,48 @@
+export interface GalleryItem {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export const galleryItems: GalleryItem[] = [
+  {
+    title: 'wh000000',
+    description: '2024-10-06',
+    image: '/images/wh000000.jpg',
+  },
+  {
+    title: 'wh092424',
+    description: '2024-09-24',
+    image: '/images/wh092424.jpg',
+  },
+  {
+    title: 'wh092924_1',
+    description: '2024-09-29',
+    image: '/images/wh092924_1.jpg',
+  },
+  {
+    title: 'wh100624',
+    description: '2024-10-06',
+    image: '/images/wh100624.jpg',
+  },
+  {
+    title: '上海073024',
+    description: '2024-07-30',
+    image: '/images/上海073024.jpg',
+  },
+  {
+    title: '北京072724',
+    description: '2024-07-27',
+    image: '/images/北京072724.jpg',
+  },
+  {
+    title: '北京072824',
+    description: '2024-07-28',
+    image: '/images/北京072824.jpg',
+  },
+  {
+    title: 'wh092924',
+    description: '2024-11-13',
+    image: '/images/wh092924.jpg',
+  },
+];

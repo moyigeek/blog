@@ -1,0 +1,72 @@
+---
+interface GalleryItem {
+  title: string;
+  description: string;
+  image: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+  {items.map((item) => (
+    <figure class="group relative break-inside-avoid overflow-hidden rounded-xl border transition-all duration-200 hover:shadow-lg"
+      style="border-color: rgb(var(--color-border));">
+      <img
+        src={item.image}
+        alt={item.title}
+        loading="lazy"
+        class="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+      <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <p class="text-sm font-medium text-white">{item.title}</p>
+        <p class="text-xs text-white/70">{item.description}</p>
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm">
+  <button id="lightbox-close" class="absolute right-4 top-4 text-white p-2" aria-label="Close">
+    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <img id="lightbox-img" class="max-h-[90vh] max-w-[90vw] rounded-lg" src="" alt="" />
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll<HTMLElement>('figure img').forEach((img) => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      if (lightbox && lightboxImg) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox?.classList.add('hidden');
+    lightbox?.classList.remove('flex');
+  }
+
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>

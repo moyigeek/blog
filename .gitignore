@@ -1,8 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# OS files
 .DS_Store
 Thumbs.db
-db.json
+
+# Logs
 *.log
-node_modules/
-public/
+npm-debug.log*
+
+# Environment
+.env
+.env.production
+.dev.vars
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Hexo legacy (no longer used)
+db.json
 .deploy*/
 _multiconfig.yml

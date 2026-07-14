@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PostCard from '@components/PostCard.astro';
+
+export async function getStaticPaths() {
+  const allPosts = (await getCollection('posts')).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+  const pageSize = 10;
+  const totalPages = Math.ceil(allPosts.length / pageSize);
+
+  // Generate pages 2, 3, ... (page 1 is handled by index.astro)
+  const paths = [];
+  for (let i = 1; i < totalPages; i++) {
+    paths.push({
+      params: { page: String(i + 1) },
+      props: {
+        posts: allPosts.slice(i * pageSize, (i + 1) * pageSize),
+        currentPage: i + 1,
+        totalPages,
+      },
+    });
+  }
+  return paths;
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+const prevUrl = currentPage === 2 ? '/' : `/${currentPage - 1}`;
+---
+
+<BaseLayout>
+  <div class="container-wide py-8 sm:py-12">
+    <h1 class="mb-8 text-2xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      文章列表 <span style="color: rgb(var(--color-muted));">第 {currentPage} 页</span>
+    </h1>
+
+    <div class="grid gap-4">
+      {posts.map((post: any) => (
+        <PostCard
+          title={post.data.title}
+          date={post.data.date}
+          tags={post.data.tags}
+          url={`/posts/${post.slug}/`}
+          description={post.data.description}
+        />
+      ))}
+    </div>
+
+    <nav class="mt-12 flex items-center justify-center gap-4">
+      <a href={prevUrl} class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent dark:hover:text-accent-light"
+        style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        上一页
+      </a>
+
+      <span class="text-sm font-medium" style="color: rgb(var(--color-muted));">
+        {currentPage} / {totalPages}
+      </span>
+
+      {currentPage < totalPages ? (
+        <a href={`/${currentPage + 1}`} class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent dark:hover:text-accent-light"
+          style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+          下一页
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      ) : (
+        <span class="flex items-center gap-1 rounded-lg border px-4 py-2 text-sm font-medium opacity-40"
+          style="border-color: rgb(var(--color-border)); color: rgb(var(--color-fg));">
+          下一页
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      )}
+    </nav>
+  </div>
+</BaseLayout>

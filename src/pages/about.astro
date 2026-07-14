@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { SITE } from '@/config';
+---
+
+<BaseLayout title="关于" description="关于我">
+  <div class="container-prose py-8 sm:py-12">
+    <h1 class="mb-8 text-3xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      关于
+    </h1>
+
+    <div class="prose prose-lg max-w-none dark:prose-invert">
+      <p>Hi，我是 <strong>{SITE.author}</strong>。</p>
+      <p>{SITE.subtitle}</p>
+
+      <h2>兴趣方向</h2>
+      <ul>
+        <li>操作系统内核 (Rust, rCore)</li>
+        <li>网络安全攻防</li>
+        <li>AI / LLM 应用开发</li>
+        <li>C++ / Rust 系统编程</li>
+      </ul>
+
+      <h2>联系方式</h2>
+      <ul>
+        <li>GitHub: <a href={SITE.social.github} target="_blank" rel="noopener">@{SITE.author}</a></li>
+        <li>Email: <a href={`mailto:${SITE.social.email}`}>{SITE.social.email}</a></li>
+      </ul>
+
+      <hr />
+
+      <p style="color: rgb(var(--color-muted)); font-style: italic;">
+        setback is unavoidable but giving up is unforgivable
+      </p>
+    </div>
+  </div>
+</BaseLayout>

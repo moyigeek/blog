@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 255 255 255;
+    --color-fg: 30 30 30;
+    --color-muted: 120 120 120;
+    --color-border: 230 230 230;
+    --color-card: 250 250 250;
+    --color-accent: 163 31 52;
+  }
+
+  .dark {
+    --color-bg: 24 24 27;
+    --color-fg: 228 228 231;
+    --color-muted: 145 145 150;
+    --color-border: 39 39 42;
+    --color-card: 30 30 33;
+    --color-accent: 201 42 74;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-fg));
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Background layers */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url('/images/back-light.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: filter 0.4s ease;
+  }
+
+  .dark .bg-layer {
+    background-image: url('/images/back-dark.jpg');
+  }
+
+  /* Article page: blur the background */
+  body[data-article='true'] .bg-layer {
+    filter: blur(20px);
+    transform: scale(1.05); /* prevent blurred edge artifacts */
+  }
+
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgb(var(--color-bg) / 0.55);
+    backdrop-filter: blur(0px);
+    transition: background 0.4s ease;
+  }
+
+  .dark .bg-overlay {
+    background: rgb(var(--color-bg) / 0.7);
+  }
+
+  /* Article page: stronger overlay for readability */
+  body[data-article='true'] .bg-overlay {
+    background: rgb(var(--color-bg) / 0.8);
+  }
+
+  .dark body[data-article='true'] .bg-overlay {
+    background: rgb(var(--color-bg) / 0.85);
+  }
+
+  .content-layer {
+    position: relative;
+    z-index: 10;
+  }
+
+  ::selection {
+    background: rgb(var(--color-accent) / 0.15);
+  }
+}
+
+@layer components {
+  .container-prose {
+    @apply mx-auto w-full max-w-3xl px-5 sm:px-6;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-6;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-gray-600 transition-colors hover:text-accent dark:text-gray-400 dark:hover:text-accent-light;
+  }
+
+  .nav-link-active {
+    @apply text-accent dark:text-accent-light;
+  }
+
+  .tag-chip {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors;
+    background: rgb(var(--color-accent) / 0.08);
+    color: rgb(var(--color-accent));
+  }
+
+  .tag-chip:hover {
+    background: rgb(var(--color-accent) / 0.15);
+  }
+
+  .post-card {
+    @apply relative rounded-xl border p-5 transition-all duration-200 hover:shadow-md;
+    border-color: rgb(var(--color-border));
+    background: rgb(var(--color-card));
+  }
+
+  .post-card:hover {
+    border-color: rgb(var(--color-accent) / 0.3);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-muted) / 0.5);
+}
+
+/* Code block styles */
+.astro-code {
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Shiki dual-theme: light/dark switch */
+.dark .astro-code {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
+/* Prose overrides */
+.prose pre {
+  @apply rounded-lg;
+}
+
+.prose img {
+  @apply rounded-lg;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* KaTeX dark mode adaptation */
+.dark .katex {
+  color: rgb(var(--color-fg));
+}
+
+.dark .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}

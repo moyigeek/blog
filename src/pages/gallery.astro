@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import MasonryGallery from '@components/MasonryGallery.astro';
+import { galleryItems } from '@/data/gallery';
+---
+
+<BaseLayout title="相册" description="照片墙">
+  <div class="container-wide py-8 sm:py-12">
+    <h1 class="mb-8 text-3xl font-bold tracking-tight" style="color: rgb(var(--color-fg));">
+      相册
+      <span class="ml-2 text-lg font-normal" style="color: rgb(var(--color-muted));">
+        {galleryItems.length} 张
+      </span>
+    </h1>
+
+    <MasonryGallery items={galleryItems} />
+  </div>
+</BaseLayout>
